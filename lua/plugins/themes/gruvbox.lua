@@ -54,6 +54,10 @@ return {
 
     vim.g.gruvbox_material_enable_italic = true
     vim.g.gruvbox_material_transparent_background = 1
+    vim.g.gruvbox_material_float_style = "dim"
+    vim.g.gruvbox_material_diagnostic_line_highlight = 1
+    -- vim.api.nvim_set_hl(0, "NormalFloat", { bg = "" })
+    -- vim.api.nvim_set_hl(0, "FloatBorder", { bg = "" })
     vim.cmd.colorscheme('gruvbox-material')
   end
 }

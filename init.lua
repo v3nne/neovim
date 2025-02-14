@@ -1,5 +1,7 @@
+--vim.g.tmux_navigator_no_mappings = 1
 require 'core.options'
 require 'core.keymaps'
+local int_to_hex = require("utils").int_to_hex
 
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -25,6 +27,29 @@ require('lazy').setup({
   require 'plugins.lsp',
   require 'plugins.autocompletion',
   require 'plugins.alpha',
-  require 'plugins.indent-blankline'
+  require 'plugins.indent-blankline',
+  require 'plugins.misc'
 })
 
+
+local normal_float = vim.api.nvim_get_hl(0, { name = "NormalFloat" })
+local float_border = vim.api.nvim_get_hl(0, { name = "FloatBorder" })
+
+-- the hl's also has `ctermfg` & `ctermbg` but not according to the lsp
+vim.api.nvim_set_hl(0, "NormalFloat", { fg = int_to_hex(normal_float.fg) })
+vim.api.nvim_set_hl(0, "FloatBorder", { fg = int_to_hex(float_border.fg) })
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+  vim.lsp.handlers.hover,
+  { border = "rounded" }
+)
+vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+  vim.lsp.handlers.signatureHelp,
+  { border = "rounded" }
+)
+
+vim.diagnostic.config({
+  float = {
+    border = "rounded"
+  }
+})
